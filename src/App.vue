@@ -1,32 +1,60 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="aside">
+      <app-aside></app-aside>
     </div>
-    <router-view />
+    <div id="chat-area">
+      <app-chat></app-chat>
+    </div>
   </div>
 </template>
 
+<script>
+import { mapActions } from "vuex";
+
+import Aside from "./components/Aside";
+import Chat from "./components/Chat";
+
+export default {
+  components: {
+    "app-aside": Aside,
+    "app-chat": Chat
+  },
+  methods: {
+    ...mapActions(["updateUsername"])
+  },
+  computed: {
+    value: {
+      get() {
+        return this.$store.getters.username;
+      },
+      set(username) {
+        this.$store.dispatch("updateUsername", username);
+      }
+    }
+  },
+  beforeCreate: function() {
+    const u = prompt("Your username", "Anon");
+    this.$store.dispatch("updateUsername", u);
+  }
+};
+</script>
+
 <style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 21px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  display: grid;
+  width: 100vw;
+  grid-template-columns: 20% 80%;
+  padding: 0;
 }
 </style>
