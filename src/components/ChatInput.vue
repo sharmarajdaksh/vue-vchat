@@ -1,8 +1,8 @@
 <template>
   <div id="chat-input">
-    <form>
-      <input placeholder="Say something" type="text" />
-      <button type="submit" @click="e => e.preventDefault()">Send</button>
+    <form v-on:submit.prevent="sendText">
+      <input placeholder="Say something" type="text" v-model="message" />
+      <button type="submit">Send</button>
     </form>
   </div>
 </template>
@@ -10,15 +10,17 @@
 <script>
 export default {
   data: () => {
-    return { socket: null };
+    return { socket: null, message: "" };
   },
   methods: {
     sendName: function() {
       this.socket.send(this.$store.getters.username);
-      this.sendText();
     },
     sendText: function() {
-      this.socket.send("HELLOOOO");
+      if (this.message !== "") {
+        this.socket.send(this.message);
+      }
+      this.message = "";
     },
     initSocket: function() {
       this.socket.onopen = () => {
@@ -28,6 +30,10 @@ export default {
       this.socket.onclose = () => {
         console.log("Socket closed");
       };
+      this.socket.addEventListener("message", event => {
+        const [u, m] = event.data.split("--->");
+        this.$store.dispatch("addMessage", { username: u, text: m });
+      });
     }
   },
   beforeMount() {

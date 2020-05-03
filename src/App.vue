@@ -23,16 +23,6 @@ export default {
   methods: {
     ...mapActions(["updateUsername"])
   },
-  computed: {
-    value: {
-      get() {
-        return this.$store.getters.username;
-      },
-      set(username) {
-        this.$store.dispatch("updateUsername", username);
-      }
-    }
-  },
   beforeCreate: function() {
     const u = prompt("Your username", "Anon");
     this.$store.dispatch("updateUsername", u);

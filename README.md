@@ -1,24 +1,7 @@
-# vchat
+# VCHAT
 
-## Project setup
-```
-npm install
-```
+Vue.js based real time chat using WebSockets (backend agnostic as long as sockets are supported). Meant as a demo FE for [my Golang web-socket server](https://github.com/sharmarajdaksh/chat-microservice).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+![Demo gif](vchat.gif)
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+For instructions on how to run this on your computer, see SETUP.md.

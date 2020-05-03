@@ -5,10 +5,8 @@
 <script>
 export default {
   computed: {
-    username: {
-      get() {
-        return this.$store.getters.username;
-      }
+    username() {
+      return this.$store.getters.username;
     }
   }
 };
